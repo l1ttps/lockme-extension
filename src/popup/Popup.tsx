@@ -4,7 +4,7 @@ const Popup = (): ReactElement => {
   document.body.style.height = '15rem';
   return (
     <div className="flex items-center justify-center h-screen">
-      <h1 className='text-red-500'>Popup 1</h1>
+      <h1 className='text-red-500'>Popup </h1>
     </div>
   );
 };
