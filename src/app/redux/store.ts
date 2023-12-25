@@ -12,12 +12,16 @@ import {
   REHYDRATE,
 } from 'reduxjs-toolkit-persist';
 import { WebStorage } from 'reduxjs-toolkit-persist/lib/types';
+import lockReducer from "./slices/lockSlice";
+import passwordReducer from "./slices/passwordSlice";
 const persistConfig = {
   key: 'root',
   storage: localStorage as WebStorage,
 };
 
 const reducers = combineReducers({
+  password: passwordReducer,
+  lock: lockReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

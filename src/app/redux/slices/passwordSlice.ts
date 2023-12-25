@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
 
 interface PasswordState {
     password: string | null
@@ -26,6 +25,5 @@ export const passwordSlice = createSlice({
 
 export const { setPassword } = passwordSlice.actions;
 
-export const selectCount = (state: RootState) => state.counter.value;
 
 export default passwordSlice.reducer;
