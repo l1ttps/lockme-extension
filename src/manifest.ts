@@ -2,8 +2,8 @@ import { ManifestV3Export } from '@crxjs/vite-plugin';
 
 const manifest: ManifestV3Export = {
   manifest_version: 3,
-  name: 'Browser Extension TypeScript & React Starter',
-  description: 'Browser Extension, TypeScript, React',
+  name: 'LockMe Extension',
+  description: 'Browser lock screen extension',
   version: '0.1',
   background: {
     service_worker: 'src/background/index.ts',

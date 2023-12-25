@@ -16,5 +16,6 @@ browser.runtime.onInstalled.addListener(async (details) => {
   }
 });
 
+
 export { };
 
