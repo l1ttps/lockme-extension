@@ -17,8 +17,8 @@ export const passwordSlice = createSlice({
          *
          * @param {PayloadAction<PasswordState>} action - The action containing the new password state.
          */
-        setPassword: (state, action: PayloadAction<PasswordState>) => {
-            state.password = action.payload.password
+        setPassword: (state, action: PayloadAction<string>) => {
+            state.password = action.payload
         },
     },
 });
