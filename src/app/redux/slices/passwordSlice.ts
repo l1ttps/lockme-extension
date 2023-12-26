@@ -1,16 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface PasswordState {
-    hash: string | null
+    hash?: string | null,
+    createdAt?: Date | null
 }
-const initialState: PasswordState = {
-    hash: null
-}
+const initialState: PasswordState = {}
 
 export const passwordSlice = createSlice({
-    name: 'counter',
+    name: 'password',
     initialState,
-
     reducers: {
         /**
          * Sets the password state to the value provided in the action payload.
@@ -19,11 +17,16 @@ export const passwordSlice = createSlice({
          */
         setPassword: (state, action: PayloadAction<string>) => {
             state.hash = action.payload
+            state.createdAt = new Date()
         },
+        removePassword: (state) => {
+            state.createdAt = null
+            state.hash = null
+        }
     },
 });
 
-export const { setPassword } = passwordSlice.actions;
+export const { setPassword, removePassword } = passwordSlice.actions;
 
 
 export default passwordSlice.reducer;

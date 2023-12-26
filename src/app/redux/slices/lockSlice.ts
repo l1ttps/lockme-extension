@@ -8,7 +8,7 @@ const initialState: LockState = {
 }
 
 export const lockSlice = createSlice({
-    name: 'counter',
+    name: 'lock',
     initialState,
 
     reducers: {
