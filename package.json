@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "run-s clean && vite",
-    "build": "run-s clean && tsc && vite build && run-s firefox-build",
+    "build": "run-s clean && tsc && vite build",
     "firefox-build": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ts-node utils/scripts/mv3ToMv2Build.ts",
     "clean": "run-p clean:*",
     "clean:dist": "rimraf dist",
@@ -30,12 +30,16 @@
     "@reduxjs/toolkit": "1.8.4",
     "@types/bcryptjs": "2.4.6",
     "bcryptjs": "2.4.3",
+    "localforage": "1.10.0",
+    "match-sorter": "6.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.49.2",
     "react-redux": "7.2.8",
+    "react-router-dom": "6.21.1",
     "redux-persist-webextension-storage": "1.0.2",
     "reduxjs-toolkit-persist": "7.2.1",
+    "sort-by": "1.2.0",
     "webextension-polyfill": "0.9.0"
   },
   "devDependencies": {

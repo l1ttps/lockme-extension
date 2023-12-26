@@ -16,7 +16,7 @@ const manifest: ManifestV3Export = {
   web_accessible_resources: [
     {
       resources: [
-        'src/welcome/welcome.html',
+        // 'src/options/options.html',
       ],
       matches: ['<all_urls>'],
     },
