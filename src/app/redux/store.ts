@@ -17,6 +17,7 @@ import passwordReducer from "./slices/passwordSlice";
 const persistConfig = {
   key: 'root',
   storage: localStorage as WebStorage,
+  whitelist: ['password'],
 };
 
 const reducers = combineReducers({

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface PasswordState {
     hash?: string | null,
-    createdAt?: Date | null
+    createdAt?: number | null
 }
 const initialState: PasswordState = {}
 
@@ -17,7 +17,7 @@ export const passwordSlice = createSlice({
          */
         setPassword: (state, action: PayloadAction<string>) => {
             state.hash = action.payload
-            state.createdAt = new Date()
+            state.createdAt = new Date().getTime()
         },
         removePassword: (state) => {
             state.createdAt = null
