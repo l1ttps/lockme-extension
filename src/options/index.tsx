@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { Route, HashRouter as Router, Routes } from "react-router-dom";
 
 import { Provider } from 'react-redux';
-import Welcome from '../app/pages/Welcome';
+import Root from '../app/pages/root/Root';
+import Welcome from '../app/pages/welcome/Welcome';
 import { proxyStore } from '../app/redux/proxyStore';
 import '../tailwind.css';
 proxyStore.ready().then(() => {
@@ -12,7 +13,9 @@ proxyStore.ready().then(() => {
       <Provider store={proxyStore}>
         <Router>
           <Routes>
+            <Route path="/" element={<Root />} />
             <Route path="/welcome" element={<Welcome />} />
+            <Route path="/settings" element={<h1>settings</h1>} />
           </Routes>
         </Router>
       </Provider>

@@ -2,16 +2,19 @@ import * as bcrypt from "bcryptjs";
 import { ReactElement } from 'react';
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
-import logo from "../../../public/images/logo.png";
-import { setPassword } from "../redux/slices/passwordSlice";
-import { PasswordForm } from "../type/types";
+import { useNavigate } from "react-router-dom";
+import logo from "../../../../public/images/logo.png";
+import { setPassword } from "../../redux/slices/passwordSlice";
+import { PasswordForm } from "../../type/types";
 
 const Welcome = (): ReactElement => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const dispatch = useDispatch()
+  const navigate = useNavigate();
   const onSubmit = async (data: PasswordForm | any) => {
     const hash = bcrypt.hashSync(data.password)
     dispatch(setPassword(hash))
+    navigate("/settings");
   };
 
   const validateFormPassWord = {
