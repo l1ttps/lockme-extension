@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Route, HashRouter as Router, Routes } from "react-router-dom";
 
 import { Provider } from 'react-redux';
+import LockScreen from '../app/pages/lock-screen/LockScreen';
 import Root from '../app/pages/root/Root';
 import Settings from '../app/pages/settings/Settings';
 import Welcome from '../app/pages/welcome/Welcome';
@@ -16,6 +17,7 @@ proxyStore.ready().then(() => {
           <Routes>
             <Route path="/" element={<Root />} />
             <Route path="/welcome" element={<Welcome />} />
+            <Route path="/lock-screen" element={<LockScreen />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>
         </Router>
