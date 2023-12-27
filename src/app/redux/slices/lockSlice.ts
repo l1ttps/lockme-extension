@@ -37,6 +37,11 @@ export const lockSlice = createSlice({
             state.isLocked = true,
                 state.lockAt = new Date().getTime()
         },
+        /**
+         * Retry the operation.
+         *
+         * @param {object} state - The state object.
+         */
         retry: (state) => {
             state.tried = state.tried + 1
             if (state.tried >= 5) {
