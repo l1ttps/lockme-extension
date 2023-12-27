@@ -14,15 +14,17 @@ import {
 import { WebStorage } from 'reduxjs-toolkit-persist/lib/types';
 import lockReducer from "./slices/lockSlice";
 import passwordReducer from "./slices/passwordSlice";
+import settingsReducer from "./slices/settingsSlice";
 const persistConfig = {
   key: 'root',
   storage: localStorage as WebStorage,
-  whitelist: ['password'],
+  whitelist: ['password', 'settings'],
 };
 
 const reducers = combineReducers({
   password: passwordReducer,
-  lock: lockReducer
+  lock: lockReducer,
+  settings: settingsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
