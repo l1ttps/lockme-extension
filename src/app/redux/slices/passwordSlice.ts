@@ -2,7 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface PasswordState {
     hash?: string | null,
+    hint?: string | null
     createdAt?: number | null
+}
+
+interface SetPasswordPayload {
+    hash: string,
+    hint: string
 }
 const initialState: PasswordState = {}
 
@@ -15,8 +21,9 @@ export const passwordSlice = createSlice({
          *
          * @param {PayloadAction<PasswordState>} action - The action containing the new password state.
          */
-        setPassword: (state, action: PayloadAction<string>) => {
-            state.hash = action.payload
+        setPassword: (state, action: PayloadAction<SetPasswordPayload>) => {
+            state.hash = action.payload.hash
+            state.hint = action.payload.hint
             state.createdAt = new Date().getTime()
         },
         removePassword: (state) => {
