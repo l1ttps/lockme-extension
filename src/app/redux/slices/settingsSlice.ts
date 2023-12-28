@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface SettingsState {
-    isShowPasswordHint: boolean,
-    isEnableLock: boolean
+    showPasswordHint: boolean,
+    enableLock: boolean
 }
 
 interface ChangeSettingsPayload {
@@ -11,8 +11,8 @@ interface ChangeSettingsPayload {
 }
 
 const initialState: SettingsState = {
-    isShowPasswordHint: true,
-    isEnableLock: true
+    showPasswordHint: true,
+    enableLock: true
 }
 
 export const settingsSlice = createSlice({

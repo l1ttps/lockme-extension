@@ -15,7 +15,7 @@ const Settings = () => {
                 <Tabs.Item active title="Configs" icon={HiAdjustments}>
                     <Configurations />
                 </Tabs.Item>
-                <Tabs.Item active title="Change password" icon={HiLockClosed}>
+                <Tabs.Item color="yellow" active title="Change password" icon={HiLockClosed}>
                     <ChangePassword />
                 </Tabs.Item>
             </Tabs>

@@ -1,6 +1,6 @@
 import * as bcrypt from "bcryptjs";
 import { Button } from "flowbite-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -16,9 +16,7 @@ const LockScreen = () => {
     const [searchParams] = useSearchParams();
     const type = searchParams.get('type');
     const { hash, hint } = useAppSelector(state => state.password)
-    const { isShowPasswordHint } = useAppSelector(state => state.settings)
-    const [update, setUpdate] = useState(new Date().getTime())
-    const { disabledExpires } = useAppSelector(state => state.lock)
+    const { showPasswordHint } = useAppSelector(state => state.settings)
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const isWindow = useMemo(() => {
@@ -73,13 +71,12 @@ const LockScreen = () => {
                         <input autoFocus {...register("password", { required: true })} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                     </div>
                     {errors.password && <span className='text-red-500'>{errors.password.message?.toString()}</span>}
-                    {isShowPasswordHint && <div className='text-center text-gray-400'>Password Hint: {hint}</div>}
-                    <Button color="blue" fullSized type="submit">Unlock</Button>
+                    {showPasswordHint && <div className='text-center text-gray-400'>Password Hint: {hint}</div>}
+                    <Button fullSized type="submit">Unlock</Button>
                     {isWindow && <div className="flex justify-center w-full">
                         <Button onClick={handleCloseWindow} color="gray" pill>
                             Close
                         </Button></div>}
-
                 </form>
             </Wrapper>
 
