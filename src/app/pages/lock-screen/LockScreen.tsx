@@ -1,5 +1,6 @@
 import * as bcrypt from "bcryptjs";
-import { useEffect, useState } from "react";
+import { Button } from "flowbite-react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -20,16 +21,17 @@ const LockScreen = () => {
     const { disabledExpires } = useAppSelector(state => state.lock)
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    const isWindow = useMemo(() => {
+        return type === LockScreenType.WINDOW
+    }, [type])
     const onSubmit = async (data: LockScreenForm | any) => {
         const { password } = data
         const passed = bcrypt.compareSync(password, hash)
         if (passed) { // Handle passed lock screen
             dispatch(unLock())
             // Close window
-            if (type === LockScreenType.WINDOW) {
-                browser.windows.getCurrent().then(tab => {
-                    if (tab.id) browser.windows.remove(tab.id)
-                })
+            if (isWindow) {
+                handleCloseWindow()
             }
             else navigate("/settings");
         }
@@ -49,6 +51,12 @@ const LockScreen = () => {
         };
     }, []);
 
+    const handleCloseWindow = () => {
+        browser.windows.getCurrent().then(tab => {
+            if (tab.id) browser.windows.remove(tab.id)
+        })
+    }
+
 
     const handleKeyDown = (event: any) => {
 
@@ -59,7 +67,6 @@ const LockScreen = () => {
     return (
         <div tabIndex={0} onKeyDown={handleKeyDown}>
             <Wrapper>
-                {type}
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
@@ -67,10 +74,15 @@ const LockScreen = () => {
                     </div>
                     {errors.password && <span className='text-red-500'>{errors.password.message?.toString()}</span>}
                     {isShowPasswordHint && <div className='text-center text-gray-400'>Password Hint: {hint}</div>}
-                    <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Unlock</button>
+                    <Button color="blue" fullSized type="submit">Unlock</Button>
+                    {isWindow && <div className="flex justify-center w-full">
+                        <Button onClick={handleCloseWindow} color="gray" pill>
+                            Close
+                        </Button></div>}
 
                 </form>
             </Wrapper>
+
         </div>
     );
 };
