@@ -2,17 +2,15 @@ import * as bcrypt from "bcryptjs";
 import { Button, TextInput } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { PasswordForm } from "../../../types/types";
 import { useAppSelector } from "../../redux/hooks";
 import { setPassword } from "../../redux/slices/passwordSlice";
 
 const ChangePassword = () => {
-    const { register, handleSubmit, watch, setError, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, watch, setError, formState: { errors } } = useForm();
     const { hash } = useAppSelector(state => state.password)
     const dispatch = useDispatch()
-    const navigate = useNavigate();
     const onSubmit = async (data: PasswordForm | any) => {
         const { oldPassword, password, passwordHint: hint } = data
         if (bcrypt.compareSync(oldPassword, hash)) {
@@ -21,7 +19,7 @@ const ChangePassword = () => {
                 hint
             }))
             toast("Password updated successfully", { type: "success", })
-            navigate("/settings");
+            reset()
         }
         else {
             setError("oldPassword", { type: "manual", message: "Old password is not correct" })
