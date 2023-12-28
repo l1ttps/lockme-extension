@@ -3,13 +3,17 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { useSearchParams } from 'react-router-dom';
+import browser from "webextension-polyfill";
+import { LockScreenForm, LockScreenType } from "../../../types/types";
 import Wrapper from "../../comps/Wrapper";
 import { useAppSelector } from "../../redux/hooks";
 import { retry, unLock } from "../../redux/slices/lockSlice";
-import { LockScreenForm } from "../../type/types";
 
 const LockScreen = () => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
+    const [searchParams] = useSearchParams();
+    const type = searchParams.get('type');
     const { hash, hint } = useAppSelector(state => state.password)
     const { isShowPasswordHint } = useAppSelector(state => state.settings)
     const [update, setUpdate] = useState(new Date().getTime())
@@ -19,15 +23,18 @@ const LockScreen = () => {
     const onSubmit = async (data: LockScreenForm | any) => {
         const { password } = data
         const passed = bcrypt.compareSync(password, hash)
-        if (passed) {
-            // handle success
+        if (passed) { // Handle passed lock screen
             dispatch(unLock())
-            navigate("/settings");
+            // Close window
+            if (type === LockScreenType.WINDOW) {
+                browser.windows.getCurrent().then(tab => {
+                    if (tab.id) browser.windows.remove(tab.id)
+                })
+            }
+            else navigate("/settings");
         }
         else {
-            // show error
             setError('password', { type: 'manual', message: 'Password incorrect' })
-            // increase tried
             dispatch(retry())
         }
     };
@@ -44,7 +51,7 @@ const LockScreen = () => {
 
 
     const handleKeyDown = (event: any) => {
-        console.log(event.key);
+
         if (event.key.startsWith('F')) { // Check for F1 to F12
             event.preventDefault();
         }
@@ -52,6 +59,7 @@ const LockScreen = () => {
     return (
         <div tabIndex={0} onKeyDown={handleKeyDown}>
             <Wrapper>
+                {type}
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>

@@ -6,3 +6,8 @@ export interface PasswordForm {
 export interface LockScreenForm {
     password: string;
 }
+
+export enum LockScreenType {
+    WINDOW = 'window',
+    TAB = 'tab'
+}

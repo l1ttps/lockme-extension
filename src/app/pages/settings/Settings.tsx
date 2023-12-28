@@ -21,7 +21,7 @@ const Settings = () => {
     }, [settings]);
 
     const handleChangeState = (checked: boolean, key: keyof SettingsState) => {
-        console.log(checked, key);
+
         dispatch(changeSettings({
             checked,
             key
