@@ -3,28 +3,36 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import createPasskeys from "../../../../utils/createPasskey";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { setUsername } from "../../../redux/slices/passkeysSlice";
 
 const CreatePasskeys = () => {
     return (
         <div>
-            <ButtonCreatePasskeys />
+            <div className="flex justify-end w-full">
+                <ButtonCreatePasskeys />
+            </div>
         </div>
     );
 };
 
-interface ICreatePasskeysForm {
-    username: string
-}
-
 const ButtonCreatePasskeys = () => {
+    const dispatch = useAppDispatch()
+    const { username } = useAppSelector(state => state.passkeys)
     const [openModal, setOpenModal] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const onSubmit = async (data: { username: any; }) => {
         const { username } = data
-        createPasskeys(username).finally(() => done()).catch((e) => {
-            console.log(e);
-            toast("Create passkeys cannot be done", { type: "error", })
-        })
+
+        createPasskeys(username)
+            .then(() => {
+                dispatch(setUsername(username))
+            })
+            .finally(() => done())
+            .catch((e) => {
+                console.error(e);
+                toast("Create passkeys cannot be done", { type: "error", })
+            })
     };
 
     const done = () => {
@@ -39,10 +47,12 @@ const ButtonCreatePasskeys = () => {
                     <Modal.Header>Create passkeys</Modal.Header>
                     <Modal.Body>
                         <div>
-                            <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                            <TextInput autoFocus {...register("username", { required: true })} type="text" name="username" id="username" />
+                            <div>
+                                <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                                <TextInput defaultValue={username} autoFocus {...register("username", { required: true })} type="text" name="username" id="username" />
+                            </div>
+                            {errors.username && <span className='text-red-500'>{errors.username.message?.toString()}</span>}
                         </div>
-                        {errors.username && <span className='text-red-500'>{errors.username.message?.toString()}</span>}
                     </Modal.Body>
                     <Modal.Footer>
                         <Button color="gray" onClick={() => setOpenModal(false)}>
