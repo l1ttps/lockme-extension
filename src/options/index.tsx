@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { Route, HashRouter as Router, Routes } from "react-router-dom";
 
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LockScreen from '../app/pages/lock-screen/LockScreen';
 import Root from '../app/pages/root/Root';
 import Settings from '../app/pages/settings/Settings';
@@ -22,6 +24,7 @@ proxyStore.ready().then(() => {
           </Routes>
         </Router>
       </Provider>
+      <ToastContainer position='bottom-center' autoClose={1000} hideProgressBar />
     </React.StrictMode>
   );
 })
