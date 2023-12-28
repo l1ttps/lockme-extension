@@ -3,9 +3,9 @@ import { Button, TextInput } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { PasswordForm } from "../../../types/types";
 import { useAppSelector } from "../../redux/hooks";
 import { setPassword } from "../../redux/slices/passwordSlice";
+import { PasswordForm } from "../../types/types";
 
 const ChangePassword = () => {
     const { register, handleSubmit, reset, watch, setError, formState: { errors } } = useForm();

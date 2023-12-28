@@ -6,10 +6,10 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { useSearchParams } from 'react-router-dom';
 import browser from "webextension-polyfill";
-import { LockScreenForm, LockScreenType } from "../../../types/types";
 import Wrapper from "../../comps/Wrapper";
 import { useAppSelector } from "../../redux/hooks";
 import { retry, unLock } from "../../redux/slices/lockSlice";
+import { LockScreenForm, LockScreenType } from "../../types/types";
 
 const LockScreen = () => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();

@@ -1,8 +1,8 @@
 
 import browser from 'webextension-polyfill';
 import store from '../app/redux/store';
+import { LockScreenType } from '../app/types/types';
 import { isDev } from '../shared/utils';
-import { LockScreenType } from '../types/types';
 
 store.subscribe(() => {
 

@@ -1,5 +1,6 @@
 import { fido2Create } from "@ownid/webauthn";
 import {
+    VerifyRegistrationResponseOpts,
     generateAuthenticationOptions, verifyRegistrationResponse
 } from "@simplewebauthn/server";
 import { Buffer } from "buffer";
@@ -26,12 +27,10 @@ export default async function createPasskeys(username: string) {
         response: responseFido.data,
         expectedChallenge: expectedChallenge,
         expectedOrigin: getOrigin()
-    } as any);
-
-    console.log(verification);
-
-
-    return responseFido
+    } as VerifyRegistrationResponseOpts);
+    const { verified, registrationInfo } = verification;
+    if (verified) return registrationInfo
+    return null
 }
 
 /**
@@ -57,6 +56,12 @@ function getOrigin(): string {
     return new URL(currentUrl).origin
 }
 
+/**
+ * Creates a public key for the given username.
+ *
+ * @param {string} username - The username for which to create the public key.
+ * @return {Promise} The generated public key.
+ */
 async function createPublicKey(username: string) {
     const user = {
         id: nanoid(),
@@ -75,7 +80,7 @@ async function createPublicKey(username: string) {
             { type: "public-key", alg: -257 },
         ],
         authenticatorSelection: {
-            authenticatorAttachment: "platform",
+            // authenticatorAttachment: "platform",
             userVerification: "required",
             residentKey: "preferred",
             requireResidentKey: false,

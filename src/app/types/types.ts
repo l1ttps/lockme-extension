@@ -45,3 +45,21 @@ export interface AuthenticatorSelection {
     residentKey: string
     requireResidentKey: boolean
 }
+
+export interface Verification {
+    fmt: string
+    counter: number
+    aaguid: string
+    credentialID: Uint8Array
+    credentialPublicKey: Uint8Array
+    credentialType: string
+    attestationObject: Uint8Array
+    userVerified: boolean
+    credentialDeviceType: string
+    credentialBackedUp: boolean
+    origin: string
+}
+
+export interface Uint8Array {
+    [key: string]: number
+}

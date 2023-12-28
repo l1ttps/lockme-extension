@@ -1,29 +1,52 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
+import { Verification } from "../../types/types";
 interface PasskeysState {
-    username?: string,
+    [keys: string]: Verification & {
+        deviceName?: string,
+        createdAt: Date
+    }
 }
-
 
 const initialState: PasskeysState = {}
 
+interface SaveVerificationPayload {
+    username: string
+    verification: Verification
+}
 export const passkeysSlice = createSlice({
     name: 'passkeys',
     initialState,
     reducers: {
         /**
-         * Sets the username in the state to the provided value.
+         * Saves the verification payload to the state.
+         *
+         * @param {object} state - The current state object.
+         * @param {object} action - The payload action containing the username and verification.
+         * @param {string} action.payload.username - The username.
+         * @param {object} action.payload.verification - The verification object.
+         * @param {Date} action.payload.verification.createdAt - The creation date of the verification.
+         * @return {void}
+         */
+        saveVerification: (state, action: PayloadAction<SaveVerificationPayload>) => {
+            const { username, verification } = action.payload
+            state[username] = {
+                ...verification,
+                createdAt: new Date()
+            }
+        },
+        /**
+         * Delete a verification from the state.
          *
          * @param {string} state - The current state object.
-         * @param {PayloadAction<string>} action - The payload action containing the new username.
+         * @param {PayloadAction<string>} action - The payload action containing the verification to be deleted.
          */
-        setUsername: (state, action: PayloadAction<string>) => {
-            state.username = action.payload
-        },
+        deleteVerification: (state, action: PayloadAction<string>) => {
+            delete state[action.payload]
+        }
     },
 });
 
-export const { setUsername } = passkeysSlice.actions;
+export const { saveVerification, deleteVerification } = passkeysSlice.actions;
 
 
 export default passkeysSlice.reducer;

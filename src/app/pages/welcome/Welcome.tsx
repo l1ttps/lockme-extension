@@ -4,9 +4,9 @@ import { ReactElement } from 'react';
 import { useForm } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { PasswordForm } from "../../../types/types";
 import Wrapper from "../../comps/Wrapper";
 import { setPassword } from "../../redux/slices/passwordSlice";
+import { PasswordForm } from "../../types/types";
 
 const Welcome = (): ReactElement => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
