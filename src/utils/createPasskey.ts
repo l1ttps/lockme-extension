@@ -8,18 +8,20 @@ const rpID = "";
 
 export default async function createPasskeys(username: string) {
     const publicKey = await createPublicKey(username)
-    console.log(publicKey);
-    const credentials = await fido2Create(publicKey, username);
-    console.log(credentials);
-    return credentials
+
+    const responseFido = await fido2Create(publicKey, username);
+    return responseFido
 }
 
-// function verifyPasskeys(credentials: any) {
-//     verifyRegistrationResponse({
-//         response: credentials.data,
-//         expectedChallenge
-//     })
-// }
+/**
+ * Retrieves the origin of the current URL.
+ *
+ * @return {string} The origin of the current URL.
+ */
+function getOrigin(): string {
+    const currentUrl = window.location.href
+    return new URL(currentUrl).origin
+}
 
 async function createPublicKey(username: string) {
     const user = {
