@@ -1,6 +1,6 @@
 import { Tabs } from "flowbite-react";
 import { useMemo } from "react";
-import { HiAdjustments, HiKey, HiLockClosed } from "react-icons/hi";
+import { HiAdjustments, HiKey, HiLockClosed, HiOutlineShieldCheck } from "react-icons/hi";
 import Wrapper from "../../comps/Wrapper";
 import ChangePassword from "./ChangePassword";
 import Configurations from "./Configurations";
@@ -15,11 +15,15 @@ const Settings = () => {
                 component: <Passkeys />
             },
             {
+                title: "Tab protect",
+                icon: HiOutlineShieldCheck,
+                component: <div>Tab protected</div>
+            },
+            {
                 title: "Configs",
                 icon: HiAdjustments,
                 component: <Configurations />
             },
-
             {
                 title: "Change password",
                 icon: HiLockClosed,

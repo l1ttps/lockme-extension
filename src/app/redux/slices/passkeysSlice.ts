@@ -3,7 +3,7 @@ import { Verification } from "../../types/types";
 interface PasskeysState {
     [keys: string]: Verification & {
         deviceName?: string,
-        createdAt: Date
+        createdAt: number
     }
 }
 
@@ -31,7 +31,7 @@ export const passkeysSlice = createSlice({
             const { username, verification } = action.payload
             state[username] = {
                 ...verification,
-                createdAt: new Date()
+                createdAt: new Date().getTime()
             }
         },
         /**

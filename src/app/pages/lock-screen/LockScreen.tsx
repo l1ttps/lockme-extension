@@ -10,6 +10,7 @@ import Wrapper from "../../comps/Wrapper";
 import { useAppSelector } from "../../redux/hooks";
 import { retry, unLock } from "../../redux/slices/lockSlice";
 import { LockScreenForm, LockScreenType } from "../../types/types";
+import UnlockWithPasskeys from "./UnlockWithPasskeys";
 
 const LockScreen = () => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
@@ -73,6 +74,7 @@ const LockScreen = () => {
                     {errors.password && <span className='text-red-500'>{errors.password.message?.toString()}</span>}
                     {showPasswordHint && <div className='text-center text-gray-400'>Password Hint: {hint}</div>}
                     <Button fullSized type="submit">Unlock</Button>
+                    <UnlockWithPasskeys />
                     {isWindow && <div className="flex justify-center w-full">
                         <Button onClick={handleCloseWindow} color="gray" pill>
                             Close

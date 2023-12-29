@@ -5,6 +5,7 @@ import {
 } from "@simplewebauthn/server";
 import { Buffer } from "buffer";
 import { nanoid } from "nanoid";
+import { getOrigin } from "../app/helper/getOrigin";
 
 /**
  * Creates passkeys for a given username.
@@ -39,22 +40,13 @@ export default async function createPasskeys(username: string) {
  * @param {any} challenge - The challenge to convert.
  * @return {string} The base64-encoded string representation of the challenge.
  */
-function convertChallenge(challenge: AllowSharedBufferSource | string): string {
+export function convertChallenge(challenge: AllowSharedBufferSource | string): string {
     const textDecoder = new TextDecoder('utf-8');
     const base64 = Buffer.from(textDecoder.decode(challenge as AllowSharedBufferSource)).toString("base64")
     return base64.replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
 }
 
 
-/**
- * Retrieves the origin of the current URL.
- *
- * @return {string} The origin of the current URL.
- */
-function getOrigin(): string {
-    const currentUrl = window.location.href
-    return new URL(currentUrl).origin
-}
 
 /**
  * Creates a public key for the given username.
