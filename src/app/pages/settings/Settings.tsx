@@ -32,8 +32,8 @@ const Settings = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Settings
             </h1>
-            <Tabs aria-label="Default tabs" style="underline">
-                {tabs.map((tab => <Tabs.Item key={tab.title} title={tab.title} icon={tab.icon}>
+            <Tabs style="default">
+                {tabs.map((tab => <Tabs.Item key={tab.title} {...tab}>
                     {tab.component}
                 </Tabs.Item>))}
             </Tabs>

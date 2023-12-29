@@ -1,6 +1,6 @@
-import { Button, Table } from "flowbite-react";
+import { Button, Table, TextInput } from "flowbite-react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { deleteVerification } from "../../../redux/slices/passkeysSlice";
+import { deleteVerification, updateDeviceName } from "../../../redux/slices/passkeysSlice";
 
 /**
  * Renders a list of passkeys.
@@ -17,6 +17,14 @@ const ListPasskeys = () => {
     }
 
     if (passkeys.length === 0) return <div className="w-full text-lg text-center text-gray-500">No passkeys found</div>
+
+    const handleChangeDeviceName = (username: string, e: React.ChangeEvent) => {
+        const target = e.target as HTMLButtonElement;;
+        dispatch(updateDeviceName({
+            deviceName: target.value,
+            username
+        }))
+    }
     return (
         <div className="overflow-x-auto">
             <Table>
@@ -24,7 +32,6 @@ const ListPasskeys = () => {
                     <Table.HeadCell>Username</Table.HeadCell>
                     <Table.HeadCell>Device</Table.HeadCell>
                     <Table.HeadCell>
-
                     </Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
@@ -34,8 +41,10 @@ const ListPasskeys = () => {
                                 <Table.Cell className="font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {passkey}
                                 </Table.Cell>
-                                <Table.Cell></Table.Cell>
-                                <Table.Cell className="flex justify-end">
+                                <Table.Cell>
+                                    <TextInput maxLength={20} placeholder="Unnamed Device" value={objPasskeys[passkey].deviceName} onChange={(e) => handleChangeDeviceName(passkey, e)} />
+                                </Table.Cell>
+                                <Table.Cell>
                                     <Button onClick={() => handleDeleteVerification(passkey)} color="failure" pill size="xs">Delete</Button>
                                 </Table.Cell>
                             </Table.Row>

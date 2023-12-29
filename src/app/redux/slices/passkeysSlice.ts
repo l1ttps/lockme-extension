@@ -42,11 +42,23 @@ export const passkeysSlice = createSlice({
          */
         deleteVerification: (state, action: PayloadAction<string>) => {
             delete state[action.payload]
+        },
+        /**
+         * Updates the device name for a given user.
+         *
+         * @param {object} state - The current state of the application.
+         * @param {object} action - The action object containing the payload.
+         * @param {string} action.payload.username - The username of the user.
+         * @param {string} action.payload.deviceName - The new device name.
+         */
+        updateDeviceName: (state, action: PayloadAction<{ username: string, deviceName: string }>) => {
+            const { username, deviceName } = action.payload
+            state[username].deviceName = deviceName
         }
     },
 });
 
-export const { saveVerification, deleteVerification } = passkeysSlice.actions;
+export const { saveVerification, deleteVerification, updateDeviceName } = passkeysSlice.actions;
 
 
 export default passkeysSlice.reducer;
