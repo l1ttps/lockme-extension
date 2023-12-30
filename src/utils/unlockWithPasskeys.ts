@@ -1,11 +1,9 @@
-import { generateAuthenticationOptions, verifyAuthenticationResponse } from "@simplewebauthn/server";
-import { AuthenticationResponseJSON } from "@simplewebauthn/server/script/deps";
+import { generateAuthenticationOptions } from "@simplewebauthn/server";
 import { base64url } from "../app/helper/base64url";
-import { getRegistrationInfo } from "../app/helper/bufferUtils";
-import { getOrigin } from "../app/helper/getOrigin";
 import store from "../app/redux/store";
 export default async function unlockWithPasskeys(username: string) {
     const state = store.getState()
+    console.log(state);
     const passkeys = state.passkeys
     try {
         const options: any = await generateAuthenticationOptions({
@@ -19,18 +17,26 @@ export default async function unlockWithPasskeys(username: string) {
         });
 
         const cred = passkeys[username]
-        cred.credentialID = new Uint8Array(Object.values(cred.credentialID))
-        console.log(cred.credentialID)
-        const verification = await verifyAuthenticationResponse({
-            response: credential as AuthenticationResponseJSON,
-            expectedChallenge: options.challenge,
-            expectedOrigin: getOrigin(),
-            expectedRPID: options.rpId,
-            authenticator: getRegistrationInfo(cred),
-            requireUserVerification: false,
-        });
+        const credentialID = new Uint8Array(Object.values(cred.credentialID))
+        const b64encoded = base64url.encode(credentialID as any);
+        console.log(b64encoded);
+        // 
+        return !!credential
+        // const verification = await verifyAuthenticationResponse({
+        //     response: credential as AuthenticationResponseJSON,
+        //     expectedChallenge: options.challenge,
+        //     expectedOrigin: getOrigin(),
+        //     expectedRPID: options.rpId,
+        //     authenticator: {
+        //         counter: 0,
+        //         credentialID: credentialID,
+        //         credentialPublicKey: cred.credentialPublicKey,
+        //         transports: ["internal"]
+        //     },
+        //     requireUserVerification: false,
+        // });
 
-        return verification
+        // return verification
     } catch (error) {
         console.error("Error unlocking with passkeys:", error);
         throw error;

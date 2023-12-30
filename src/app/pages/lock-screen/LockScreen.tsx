@@ -1,6 +1,6 @@
 import * as bcrypt from "bcryptjs";
 import { Button, TextInput } from "flowbite-react";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -27,18 +27,21 @@ const LockScreen = () => {
         const { password } = data
         const passed = bcrypt.compareSync(password, hash)
         if (passed) { // Handle passed lock screen
-            dispatch(unLock())
-            // Close window
-            if (isWindow) {
-                handleCloseWindow()
-            }
-            else navigate("/settings");
+            handleUnlock()
         }
         else {
             setError('password', { type: 'manual', message: 'Password incorrect' })
             dispatch(retry())
         }
     };
+
+    const handleUnlock = useCallback(() => {
+        dispatch(unLock())
+        if (isWindow) {
+            handleCloseWindow()
+        }
+        else navigate("/settings");
+    }, [])
 
     useEffect(() => {
         // Add event listener to the whole document
@@ -74,7 +77,7 @@ const LockScreen = () => {
                     {errors.password && <span className='text-red-500'>{errors.password.message?.toString()}</span>}
                     {showPasswordHint && <div className='text-center text-gray-400'>Password Hint: {hint}</div>}
                     <Button fullSized type="submit">Unlock</Button>
-                    <UnlockWithPasskeys />
+                    <UnlockWithPasskeys callback={handleUnlock} />
                     {isWindow && <div className="flex justify-center w-full">
                         <Button onClick={handleCloseWindow} color="gray" pill>
                             Close
