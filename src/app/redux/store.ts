@@ -16,18 +16,20 @@ import lockReducer from "./slices/lockSlice";
 import passkeysReducer from "./slices/passkeysSlice";
 import passwordReducer from "./slices/passwordSlice";
 import settingsReducer from "./slices/settingsSlice";
+import tabsProtectReducer from "./slices/tabsProtect";
 
 const persistConfig = {
   key: 'root',
   storage: localStorage as WebStorage,
-  whitelist: ['password', 'settings', 'passkeys'],
+  whitelist: ['password', 'settings', 'passkeys', 'tabsProtect'],
 };
 
 const reducers = combineReducers({
   password: passwordReducer,
   lock: lockReducer,
   settings: settingsReducer,
-  passkeys: passkeysReducer
+  passkeys: passkeysReducer,
+  tabsProtect: tabsProtectReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

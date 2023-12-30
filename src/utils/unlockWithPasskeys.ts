@@ -3,7 +3,7 @@ import { base64url } from "../app/helper/base64url";
 import store from "../app/redux/store";
 export default async function unlockWithPasskeys(username: string) {
     const state = store.getState()
-    console.log(state);
+
     const passkeys = state.passkeys
     try {
         const options: any = await generateAuthenticationOptions({
@@ -19,7 +19,7 @@ export default async function unlockWithPasskeys(username: string) {
         const cred = passkeys[username]
         const credentialID = new Uint8Array(Object.values(cred.credentialID))
         const b64encoded = base64url.encode(credentialID as any);
-        console.log(b64encoded);
+
         // 
         return !!credential
         // const verification = await verifyAuthenticationResponse({

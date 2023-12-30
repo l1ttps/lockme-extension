@@ -8,8 +8,8 @@ function uintToString(a: any) {
 
 export function getRegistrationInfo(registrationInfo: any) {
     const { credentialPublicKey, counter, credentialID } = registrationInfo;
-    console.log(credentialID);
-    console.log(base64url.encode(credentialID));
+
+
     return {
         credentialID: base64url.decode(credentialID) as any,
         credentialPublicKey: credentialPublicKey,

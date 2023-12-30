@@ -34,7 +34,7 @@ const ButtonCreatePasskeys = () => {
         setLoading(true)
         createPasskeys(username)
             .then((verification) => {
-                console.log(verification);
+
                 dispatch(saveVerification({
                     username,
                     verification: verification as any
