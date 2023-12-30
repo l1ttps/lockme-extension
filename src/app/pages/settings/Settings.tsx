@@ -4,6 +4,7 @@ import { HiAdjustments, HiKey, HiLockClosed, HiOutlineShieldCheck } from "react-
 import Wrapper from "../../comps/Wrapper";
 import ChangePassword from "./ChangePassword";
 import Configurations from "./Configurations";
+import TabProtect from "./TabProtect";
 import Passkeys from "./passkeys/Passkeys";
 
 const Settings = () => {
@@ -17,7 +18,7 @@ const Settings = () => {
             {
                 title: "Tab protect",
                 icon: HiOutlineShieldCheck,
-                component: <div>Tab protected</div>
+                component: <TabProtect />
             },
             {
                 title: "Configs",

@@ -50,7 +50,6 @@ const ListPasskeys = () => {
                             </Table.Row>
                         )
                     })}
-
                 </Table.Body>
             </Table>
         </div>
