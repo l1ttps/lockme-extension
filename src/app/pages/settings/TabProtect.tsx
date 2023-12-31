@@ -1,7 +1,9 @@
-import { Button, Table } from "flowbite-react";
+import * as dayjs from "dayjs";
+import * as relativeTime from 'dayjs/plugin/relativeTime';
+import { Button, Table, Tooltip } from "flowbite-react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { TabsProtectState, deleteTab } from "../../redux/slices/tabsProtect";
-
+dayjs.extend(relativeTime)
 const TabProtect = () => {
     const dispatch = useAppDispatch()
     const tabsProtect: TabsProtectState[] = useAppSelector(state => state.tabsProtect)
@@ -10,7 +12,6 @@ const TabProtect = () => {
     const handleDeleteTab = (hostname: string) => {
         dispatch(deleteTab(hostname))
     }
-
     return (
 
         <Table>
@@ -28,7 +29,10 @@ const TabProtect = () => {
                                 {tab.hostname}
                             </Table.Cell>
                             <Table.Cell>
-                                {tab.createdAt}
+                                <Tooltip content={dayjs(tab.createdAt).format("HH:mm DD/MM/YYYY")}>
+                                    {(dayjs(tab.createdAt) as any).fromNow()}
+                                </Tooltip>
+
                             </Table.Cell>
                             <Table.Cell>
                                 <Button onClick={() => handleDeleteTab(tab.hostname)} color="failure" pill size="xs">Delete</Button>
