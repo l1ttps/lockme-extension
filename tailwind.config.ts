@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import type { Config } from 'tailwindcss';
+
+export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}', 'node_modules/flowbite-react/lib/esm/**/*.js',],
   darkMode: 'class',
   theme: {
@@ -46,4 +47,4 @@ module.exports = {
     }
   },
   plugins: [require('flowbite/plugin'),],
-};
+} as Config;

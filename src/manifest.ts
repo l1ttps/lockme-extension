@@ -13,6 +13,12 @@ const manifest: ManifestV3Export = {
     page: 'src/options/options.html',
     open_in_tab: true,
   },
+  content_scripts: [
+    {
+      matches: ['http://*/*', 'https://*/*', 'file:///*'],
+      js: ['src/content/index.tsx'],
+    },
+  ],
   web_accessible_resources: [
     {
       resources: [
