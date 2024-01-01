@@ -16,7 +16,7 @@ const LockScreen = () => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
     const [searchParams] = useSearchParams();
     const type = searchParams.get('type');
-    const redirect = searchParams.get('redirect');
+    const redirect = searchParams.get('redirect') || '';
     const { hash, hint } = useAppSelector(state => state.password)
     const { showPasswordHint } = useAppSelector(state => state.settings)
     const dispatch = useDispatch()
@@ -37,14 +37,19 @@ const LockScreen = () => {
     };
 
     const handleUnlock = useCallback(() => {
-        dispatch(unLock())
-        if (isWindow) {
-            handleCloseWindow()
+        try {
+            dispatch(unLock())
+            if (isWindow) {
+                handleCloseWindow()
+            }
+            else if (redirect) {
+                window.location.href = redirect
+            }
+            else {
+                navigate("/settings")
+            }
         }
-        else if (redirect) {
-            window.location.href = redirect
-        }
-        else {
+        catch {
             navigate("/settings")
         }
     }, [])
@@ -72,9 +77,26 @@ const LockScreen = () => {
             event.preventDefault();
         }
     };
+
+    const showRedirectHostname = useMemo(() => {
+
+        try {
+            const hostname = new URL(decodeURI(redirect))?.hostname
+            document.title = hostname
+            return new URL(decodeURI(redirect))?.hostname
+        }
+        catch {
+            return null
+        }
+    }, [redirect])
     return (
         <div tabIndex={0} onKeyDown={handleKeyDown}>
             <Wrapper>
+                {type === LockScreenType.TAB_PROTECTED && <div className="text-center">
+                    <title>{showRedirectHostname}</title>
+                    <span className="text-lg">{showRedirectHostname}</span>
+                </div>
+                }
                 <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
