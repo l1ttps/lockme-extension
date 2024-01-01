@@ -33,6 +33,7 @@
     "@twind/preset-autoprefix": "1.0.7",
     "@twind/preset-tailwind": "1.1.4",
     "@types/bcryptjs": "2.4.6",
+    "@types/lodash-es": "4.17.12",
     "bcryptjs": "2.4.3",
     "buffer": "6.0.3",
     "construct-style-sheets-polyfill": "3.1.0",
