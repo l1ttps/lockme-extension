@@ -9,7 +9,7 @@ export interface LockScreenForm {
 
 export enum LockScreenType {
     WINDOW = 'window',
-    TAB = 'tab'
+    TAB_PROTECTED = 'tab_protected',
 }
 
 export interface PublicKey {

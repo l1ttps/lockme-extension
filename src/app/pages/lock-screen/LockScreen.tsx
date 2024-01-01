@@ -16,6 +16,7 @@ const LockScreen = () => {
     const { register, handleSubmit, setError, formState: { errors } } = useForm();
     const [searchParams] = useSearchParams();
     const type = searchParams.get('type');
+    const redirect = searchParams.get('redirect');
     const { hash, hint } = useAppSelector(state => state.password)
     const { showPasswordHint } = useAppSelector(state => state.settings)
     const dispatch = useDispatch()
@@ -40,7 +41,12 @@ const LockScreen = () => {
         if (isWindow) {
             handleCloseWindow()
         }
-        else navigate("/settings");
+        else if (redirect) {
+            window.location.href = redirect
+        }
+        else {
+            navigate("/settings")
+        }
     }, [])
 
     useEffect(() => {

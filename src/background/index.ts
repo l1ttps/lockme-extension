@@ -31,18 +31,18 @@ browser.runtime.onInstalled.addListener(async (details) => {
   }
 });
 
-browser.runtime.onStartup.addListener(async () => {
-  await openLockScreenWindow()
-})
+// browser.runtime.onStartup.addListener(async () => {
+//   await openLockScreenWindow()
+// })
 
 
-browser.windows.onFocusChanged.addListener(async (window) => {
-  if (lockScreenWindowId) {
-    browser.windows.update(lockScreenWindowId, { focused: true })
-  }
-  // else {
-  //   await openLockScreenWindow()
-  // }
-});
+// browser.windows.onFocusChanged.addListener(async (window) => {
+//   if (lockScreenWindowId) {
+//     browser.windows.update(lockScreenWindowId, { focused: true })
+//   }
+//   // else {
+//   //   await openLockScreenWindow()
+//   // }
+// });
 export { };
 

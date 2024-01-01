@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import 'webextension-polyfill';
 import { proxyStore } from '../app/redux/proxyStore';
+import ProtectedScreen from './ProtectedScreen';
 import { config, cssom, observe, stringify, twind } from './twind';
 
 proxyStore.ready().then(() => {
@@ -45,6 +46,7 @@ proxyStore.ready().then(() => {
     createRoot(shadowWrapper).render(
         <React.StrictMode>
             <Provider store={proxyStore}>
+                <ProtectedScreen />
             </Provider>
         </React.StrictMode>
     );
